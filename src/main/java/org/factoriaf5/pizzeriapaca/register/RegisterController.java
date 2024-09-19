@@ -7,7 +7,7 @@ import org.factoriaf5.pizzeriapaca.users.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,13 +24,26 @@ public class RegisterController {
     }
 
     @PostMapping
-    public ResponseEntity<Map<String, String>> register(@Valid @RequestBody RegisterDto newUser) {
+    public ResponseEntity<Map<String, String>> register(
+            @Valid @RequestHeader("username") String username,
+            @RequestHeader("password") String password,
+            @RequestHeader("email") String email) {
+
+   
+        RegisterDto newUser = new RegisterDto();
+        newUser.setUsername(username);
+        newUser.setPassword(password);
+        newUser.setEmail(email);
+
+        
         User user = service.save(newUser);
 
+      
         Map<String, String> json = new HashMap<>();
         json.put("message", "Register successful");
         json.put("username", user.getUsername());
 
+     
         return ResponseEntity.status(HttpStatus.CREATED).body(json);
     }
 }
