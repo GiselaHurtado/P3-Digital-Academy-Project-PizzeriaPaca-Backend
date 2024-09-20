@@ -2,6 +2,7 @@ package org.factoriaf5.pizzeriapaca.facades;
 
 import org.factoriaf5.pizzeriapaca.encryptations.Base64Encoder;
 import org.factoriaf5.pizzeriapaca.facades.implementations.IEncryptFacade;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -11,10 +12,11 @@ public class EncoderFacade implements IEncryptFacade {
     PasswordEncoder bCryptPasswordEncoder;
     Base64Encoder base64Encoder;
 
-    public EncoderFacade(PasswordEncoder bCryptPasswordEncoder, Base64Encoder base64Encoder) {
+     public EncoderFacade(PasswordEncoder bCryptPasswordEncoder, @Qualifier("customBase64Encoder") Base64Encoder base64Encoder) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.base64Encoder = base64Encoder;
     }
+    
 
     @Override
     public String encode(String type, String 

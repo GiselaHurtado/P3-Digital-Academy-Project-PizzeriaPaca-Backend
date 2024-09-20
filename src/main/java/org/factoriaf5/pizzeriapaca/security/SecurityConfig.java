@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .formLogin(form -> form.disable())
                 .logout(out -> out
                 .logoutUrl(endpoint + "/logout")
-                .deleteCookies("pizzeriapaca"))
+                .deleteCookies("JSESSIONID"))
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
                 .requestMatchers(HttpMethod.GET, endpoint + "/login").hasAnyRole("USER", "ADMIN")
