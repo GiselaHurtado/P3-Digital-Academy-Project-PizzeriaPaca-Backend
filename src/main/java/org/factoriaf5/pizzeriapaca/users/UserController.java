@@ -20,12 +20,12 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     public List<User> getAllUsers() {
         return userService.findAllUsers();
     }
 
-    @PostMapping
+    @PostMapping("/{id}")
     public ResponseEntity<User> createUser(@RequestBody UserDto userDto, 
                                            @RequestParam Set<String> roles, 
                                            @RequestParam String email) {
