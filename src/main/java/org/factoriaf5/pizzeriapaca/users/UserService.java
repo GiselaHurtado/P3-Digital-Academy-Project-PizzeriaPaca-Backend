@@ -67,6 +67,7 @@ public class UserService {
             User updatedUser = userRepository.save(user);
 
            
+            @SuppressWarnings("unused")
             Profile profile = profileService.save(new Profile(email, updatedUser));
 
             return Optional.of(updatedUser);
