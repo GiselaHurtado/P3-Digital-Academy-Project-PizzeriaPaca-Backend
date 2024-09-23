@@ -38,8 +38,7 @@ public class User {
     @JoinTable(name = "roles_users", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     Set<Role> roles;
     
-/*     @OneToMany(mappedBy = "user")
-    private Set<Participant> participants; */
+
 
     public User() {
     }

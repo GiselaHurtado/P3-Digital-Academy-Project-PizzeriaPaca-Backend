@@ -46,8 +46,12 @@ public class SecurityConfig {
                 .deleteCookies("pizzeriapaca"))
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
-                .requestMatchers(HttpMethod.GET, endpoint + "/login").hasAnyRole("USER", "ADMIN")
+                .requestMatchers(HttpMethod.GET, endpoint + "/login").hasAnyRole("USER", "ADMIN", "KITCHEN", "MOTORIST")
                 .requestMatchers(HttpMethod.POST, endpoint + "/register").permitAll()
+                .requestMatchers(HttpMethod.GET, endpoint + "/users/{id}").hasAnyRole("USER", "ADMIN", "KITCHEN", "MOTORIST")
+                .requestMatchers(HttpMethod.DELETE, endpoint + "/**").hasAnyRole( "ADMIN")
+                .requestMatchers(HttpMethod.POST, endpoint + "/**").hasAnyRole( "ADMIN")
+                .requestMatchers(HttpMethod.PUT, endpoint + "/**").hasAnyRole( "ADMIN","KITCHEN", "MOTORIST")
                 .anyRequest().authenticated())
                 .userDetailsService(jpaUserDetailsService)
                 .httpBasic(basic -> basic.authenticationEntryPoint(myBasicAuthenticationEntryPoint))
