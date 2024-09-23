@@ -7,11 +7,13 @@ import org.factoriaf5.pizzeriapaca.users.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.springframework.web.bind.annotation.RequestHeader;
 
 @RestController
 @RequestMapping(path = "${api-endpoint}/register")
@@ -24,7 +26,10 @@ public class RegisterController {
     }
 
     @PostMapping
-    public ResponseEntity<Map<String, String>> register(@Valid @RequestBody RegisterDto newUser) {
+     public ResponseEntity<?> registerUser(@RequestHeader("newUser") String newUserHeader) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        RegisterDto newUser = objectMapper.readValue(newUserHeader, RegisterDto.class);
+    
         User user = service.save(newUser);
 
         Map<String, String> json = new HashMap<>();
