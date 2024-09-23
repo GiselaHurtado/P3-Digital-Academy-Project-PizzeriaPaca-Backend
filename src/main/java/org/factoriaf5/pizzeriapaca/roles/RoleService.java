@@ -16,4 +16,9 @@ public class RoleService {
         Role role = repository.findById(id).orElseThrow(() -> new RoleNotFoundException("Role not found"));
         return role;
     }
+
+    public Role getRoleByName(String roleName) {
+        return repository.findByName(roleName)
+                .orElseThrow(() -> new RoleNotFoundException("Role not found with name: " + roleName));
+    }
 }

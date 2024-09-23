@@ -2,8 +2,8 @@ package org.factoriaf5.pizzeriapaca.users;
 
 public class UserDto { 
 
-    private String username;
-    private String password;
+    private final String username;
+    private final String password;
     
     public String getUsername() {
         return username;
