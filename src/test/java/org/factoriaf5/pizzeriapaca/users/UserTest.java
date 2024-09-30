@@ -56,13 +56,4 @@ public class UserTest {
         assertEquals("password", user.getPassword());
         assertNull(user.getProfile());
     }
-
-    @Test
-    void testUserConstructorWithProfile() {
-        Profile profile = new Profile();
-        User user = new User("testuser", "password", profile);
-        assertEquals("testuser", user.getUsername());
-        assertEquals("password", user.getPassword());
-        assertEquals(profile, user.getProfile());
-    }
 }

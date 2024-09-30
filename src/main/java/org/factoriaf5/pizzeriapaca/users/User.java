@@ -1,8 +1,10 @@
 package org.factoriaf5.pizzeriapaca.users;
 
+import java.util.List;
 import java.util.Set;
 
 import org.factoriaf5.pizzeriapaca.profiles.Profile;
+import org.factoriaf5.pizzeriapaca.register.Address;
 import org.factoriaf5.pizzeriapaca.roles.Role;
 
 import jakarta.persistence.CascadeType;
@@ -15,7 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-//import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -34,11 +36,14 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Profile profile;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Address> addresses;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "roles_users", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+
     Set<Role> roles;
     
-
 
     public User() {
     }
@@ -46,12 +51,6 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-    }
-
-    public User(String username, String password, Profile profile) {
-        this.username = username;
-        this.password = password;
-        this.profile = profile;
     }
 
     public Long getId() {
@@ -94,4 +93,26 @@ public class User {
         this.roles = roles;
     }
 
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public String getEmail() {
+        if (this.profile != null) {
+            return this.profile.getEmail();
+        }
+        return null;
+    }
+
+    public void setEmail(String email) {
+        if (this.profile == null) {
+            this.profile = new Profile();
+            this.profile.setUser(this);
+        }
+        this.profile.setEmail(email);
+    }
 }

@@ -1,9 +1,12 @@
-{
-    "properties": [
-      {
-        "name": "api-endpoint",
-        "type": "java.lang.String",
-        "description": "A description for 'api-endpoint'"
-      }
-    ]
+{"properties": [
+  {
+    "name": "api-endpoint",
+    "type": "java.lang.String",
+    "description": "A description for 'api-endpoint'"
+  },
+  {
+    "name": "google-app-credentials",
+    "type": "java.lang.String",
+    "description": "A description for 'google-app-credentials'"
   }
+]}

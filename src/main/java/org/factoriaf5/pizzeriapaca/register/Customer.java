@@ -1,68 +1,72 @@
 package org.factoriaf5.pizzeriapaca.register;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import java.util.HashSet;
+import java.util.Set;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
-public class RegisterDto { 
+@Entity
+@Table(name = "customers")
+public class Customer {
 
-    @NotBlank
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String username;
-
-    @NotBlank
     private String password;
-
-    @Email
-    @NotBlank
     private String email;
-
-    @NotBlank
     private String firstName;
-
-    @NotBlank
     private String lastName;
 
-    @NotBlank
-    private String address;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Address> addresses = new HashSet<>();
 
-    @NotBlank
-    private String postalCode;
+    public Customer() {
+    }
 
-    @NotBlank
-    private String city;
-    
-    public RegisterDto(String username, String password, String email, String firstName, String lastName,
-    String address, String postalCode, String city) {
+    public Customer(String username, String password, String email, String firstName, String lastName) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.address = address;
-        this.postalCode = postalCode;
-        this.city = city;
     }
-    
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
     public String getUsername() {
         return username;
     }
-    
+
     public void setUsername(String username) {
         this.username = username;
     }
-    
+
     public String getPassword() {
         return password;
     }
-    
+
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     public String getEmail() {
         return email;
     }
-    
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -70,40 +74,26 @@ public class RegisterDto {
     public String getFirstName() {
         return firstName;
     }
-    
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-    
+
     public String getLastName() {
         return lastName;
     }
-    
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    
-    public String getAddress() {
-        return address;
+
+    public void addAddress(Address address) {
+        addresses.add(address);
+        address.setCustomer(this);
     }
-    
-    public void setAddress(String address) {
-        this.address = address;
-    }
-    
-    public String getPostalCode() {
-        return postalCode;
-    }
-    
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
-    
-    public String getCity() {
-        return city;
-    }
-    
-    public void setCity(String city) {
-        this.city = city;
+
+    public void removeAddress(Address address) {
+        addresses.remove(address);
+        address.setCustomer(null);
     }
 }

@@ -14,5 +14,4 @@ public class PizzeriapacaApplication {
 
 		SpringApplication.run(PizzeriapacaApplication.class, args);
 	}
-
 }
